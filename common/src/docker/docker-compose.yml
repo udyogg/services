@@ -1,0 +1,37 @@
+version: '2.2'
+services:
+  n1:
+    image: bitnami/cassandra:latest
+    cpus: "1"
+    mem_limit: 4G
+    volumes:
+      - cassandra_product:/bitnami
+    environment:
+      - CASSANDRA_CLUSTER_NAME=product_db_cluster
+      - CASSANDRA_SEEDS=n1, n2
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_PASSWORD=password123
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    networks:
+      - cluster
+  n2:
+    image: bitnami/cassandra:latest
+    cpus: "1"
+    mem_limit: 4G
+    volumes:
+      - cassandra_product:/bitnami
+    networks:
+      - cluster
+    environment:
+      - CASSANDRA_CLUSTER_NAME=product_db_cluster
+      - CASSANDRA_PASSWORD=password123
+      - CASSANDRA_SEEDS=n1, n2
+      - CASSANDRA_ENDPOINT_SNITCH=GossipingPropertyFileSnitch
+    depends_on:
+      - n1
+volumes:
+  cassandra_product:
+    driver: local
+
+networks:
+  cluster:

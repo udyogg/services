@@ -1,14 +1,12 @@
 package com.udyogg.services.product.controller;
 
-import com.udyogg.services.product.handler.GetProductHandler;
+import com.udyogg.services.product.handler.ProductHandler;
 import com.udyogg.services.product.models.streams.ProductStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 @RestController
 @RequestMapping(
@@ -18,7 +16,7 @@ import reactor.core.scheduler.Schedulers;
 public final class ProductApiController {
 
     @Autowired
-    GetProductHandler getProductHandler;
+    ProductHandler productHandler;
 
 
     @GetMapping
